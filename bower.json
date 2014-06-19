@@ -1,0 +1,24 @@
+{
+  "name": "TinyPlayer",
+  "version": "0.0.0",
+  "homepage": "https://github.com/azeem/TinyPlayer",
+  "authors": [
+    "azeem <kr00r4n@gmail.com>"
+  ],
+  "main": "Gruntfile.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.1",
+    "jquery.ui": "~1.10.4",
+    "underscore": "~1.6.0",
+    "backbone": "~1.1.2"
+  }
+}
