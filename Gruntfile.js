@@ -4,7 +4,8 @@ module.exports = function(grunt) {
     ];
 
     var lessFiles = [
-        "src/less/**/*.less"
+        "src/less/**/*.less",
+        "src/less/fontello.css"
     ];
 
     grunt.initConfig({
@@ -51,6 +52,10 @@ module.exports = function(grunt) {
             }
         },
 
+        copy: {
+            files: {expand: true, cwd: "src/less", src: ["font/*", "images/*"], dest: "build"}
+        },
+
         clean: {
             build: ['build/*'],
         },
@@ -85,9 +90,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-connect");
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-copy");
 
     // Default task.
-    grunt.registerTask('default', ['jshint', 'clean', 'concat:dev', 'less:dev']);
-    grunt.registerTask('dist', ['jshint', 'clean', 'uglify:dist', 'less:dist']);
+    grunt.registerTask('default', ['jshint', 'clean', 'concat:dev', 'less:dev', "copy"]);
+    grunt.registerTask('dist', ['jshint', 'clean', 'uglify:dist', 'less:dist', "copy"]);
     grunt.registerTask("debug", ["default", "connect", "watch"]);
 };

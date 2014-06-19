@@ -137,10 +137,15 @@
             this.playPauseIcon();
 
             var infoText = track.user.username + "-" + track.title;
+            var backgroundStyle = "";
+            if(track.artwork_url) {
+                backgroundStyle  = "linear-gradient(to right, transparent 0%, #343434 35%), ";
+                backgroundStyle += "url("+track.artwork_url+") no-repeat left top / 120px auto";
+            }
             this.$(".track-info")
                 .attr("title", infoText)
                 .text(infoText)
-                .css("background", "linear-gradient(to right, transparent 0%, #343434 50%), url("+track.artwork_url+") no-repeat left center / 200px auto");
+                .css("background", backgroundStyle);
         },
 
         playPauseIcon: function() {
@@ -283,10 +288,15 @@
         },
 
         handleTimeUpdate: function() {
-            if(!this.isSeekSliding && this.status != this.playState.STOPPED) {
+            if(this.status == this.playState.STOPPED) {
+                return;
+            }
+            if(!this.isSeekSliding) {
                 var value = (this.audio.currentTime/this.audio.duration)*100;
                 this.$(".seek-bar > div").slider("value", value);
             }
+            var position = -(this.audio.currentTime/this.audio.duration)*70;
+            this.$(".track-info").css("background-position", "0px " + position + "px");
         },
 
         handleSeek: function(event, ui) {
