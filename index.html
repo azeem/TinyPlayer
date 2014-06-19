@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TinyPlayer Demo</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/jquery.ui/dist/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="build/TinyPlayer.css">
+    <style type="text/css">
+      body {
+          background-color: #EEEEEE;
+      }
+    </style>
+</head>
+<body>
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="bower_components/jquery.ui/dist/jquery-ui.js"></script>
+  <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
+  <script type="text/javascript" src="bower_components/backbone/backbone.js"></script>
+  <script src="//connect.soundcloud.com/sdk.js"></script>
+
+  <script type="text/javascript" src="build/TinyPlayer.js"></script>
+
+  <script type="text/javascript">
+    var player = new TinyPlayer({
+        scClientId: "e818e8c85bb8ec3e90a9bbca23ca5e2a"
+    });
+    player.$el.appendTo("body");
+    player.render();
+  </script>
+</body>
+</html>
