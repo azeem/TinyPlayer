@@ -1,0 +1,327 @@
+.tiny-player {
+  width: 700px;
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -350px;
+  font-family: sans;
+  font-size: 12px;
+  z-index: 10000;
+}
+.tiny-player .glass-button {
+  height: 30px;
+  width: 30px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  background-image: none;
+  color: #FFFFFF;
+}
+.tiny-player .glass-button:hover {
+  color: #AAAAAA;
+}
+.tiny-player .player {
+  background-color: #343434;
+  border-radius: 15px 15px 0px 0px;
+  padding: 0px 10px;
+  height: 33px;
+  position: relative;
+}
+.tiny-player .player .play-control {
+  float: left;
+}
+.tiny-player .player .track-info {
+  padding: 0px 10px;
+  line-height: 30px;
+  color: #FFFFFF;
+  float: left;
+  width: 300px;
+  height: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-left: 10px;
+  text-shadow: 1px 1px #000000;
+  font-weight: bold;
+  border-radius: 15px;
+  background: linear-gradient(to right, transparent 0%, #343434 35%), url(images/albumart.png) no-repeat left center / 120px auto;
+}
+.tiny-player .player .volume {
+  float: left;
+  margin-left: 25px;
+}
+.tiny-player .player .volume button {
+  float: left;
+}
+.tiny-player .player .volume > div {
+  margin: 14px 0px 0px 30px;
+  width: 60px;
+  height: 3px;
+  border: none;
+  background-image: none;
+  background-color: #888888;
+  cursor: pointer;
+}
+.tiny-player .player .volume > div .ui-slider-range {
+  background-color: #B5DFFC;
+  background-image: none;
+}
+.tiny-player .player .volume > div .ui-slider-handle {
+  height: 5px;
+  border: none;
+  background-image: none;
+  background-color: #0097FF;
+  cursor: pointer;
+  top: -1px;
+  outline: 0;
+}
+.tiny-player .player .seek-bar {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+.tiny-player .player .seek-bar > div {
+  width: 100%;
+  height: 3px;
+  border: none;
+  background-image: none;
+  background-color: #888888;
+  overflow: hidden;
+  cursor: pointer;
+}
+.tiny-player .player .seek-bar > div .ui-slider-range {
+  background-color: #B5DFFC;
+  background-image: none;
+}
+.tiny-player .player .seek-bar > div .ui-slider-handle {
+  height: 3px;
+  border: none;
+  background: linear-gradient(to right, #b5dffc 0%, #0097ff 100%);
+  cursor: pointer;
+  top: 0px;
+  outline: 0;
+}
+.tiny-player .player .toolbar {
+  float: right;
+  margin-right: 10px;
+}
+.tiny-player .player .toolbar button.on {
+  color: #0097FF;
+}
+.tiny-player > .content {
+  border: 1px solid #AAAAAA;
+  background-color: #FFFFFF;
+}
+.tiny-player .bottom-bar {
+  height: 25px;
+  padding: 5px;
+  border-top: 1px dotted #AAAAAA;
+}
+.tiny-player .bottom-bar .search-hide {
+  float: right;
+  line-height: 25px;
+  margin-right: 10px;
+  font-size: 85%;
+  cursor: pointer;
+}
+.tiny-player .bottom-bar .search-bar {
+  float: right;
+  border: 1px solid #AAAAAA;
+  border-radius: 10px;
+  padding: 3px;
+  width: 150px;
+}
+.tiny-player .bottom-bar .search-bar.no-result {
+  background-color: #FFBBC2;
+}
+.tiny-player .bottom-bar .search-bar.busy {
+  background-color: #FFDE8B;
+}
+.tiny-player .bottom-bar .search-bar .search-icon {
+  float: left;
+}
+.tiny-player .bottom-bar .search-bar input {
+  font-size: 90%;
+  background: none;
+  border: none;
+  width: 100px;
+}
+.tiny-player .search-result {
+  height: 165px;
+  overflow-y: scroll;
+  border-top: 1px solid #AAAAAA;
+}
+.tiny-player .search-result ul {
+  margin: 0px;
+  padding: 5px;
+}
+.tiny-player .play-queue {
+  height: 125px;
+  margin: 0px;
+  padding: 10px;
+  overflow-y: auto;
+}
+.tiny-player .queue-item {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #AAAAAA;
+  border-radius: 5px;
+  float: left;
+  margin: 0px 10px 10px 0px;
+  position: relative;
+  cursor: pointer;
+}
+.tiny-player .queue-item.playing {
+  background-color: #B5DFFC;
+}
+.tiny-player .queue-item .remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  cursor: pointer;
+  display: none;
+}
+.tiny-player .queue-item:hover .remove {
+  display: block;
+}
+.tiny-player .queue-item .user {
+  color: #AAAAAA;
+  font-size: 0.9em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.tiny-player .queue-item .title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.tiny-player .queue-item .artwork {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 3px;
+  background-size: cover;
+  background-image: url(images/albumart.png);
+}
+.tiny-player .track-item {
+  list-style: none;
+  height: 30px;
+  padding: 3px;
+  margin: 3px;
+}
+.tiny-player .track-item:hover {
+  background-color: #B5DFFC;
+}
+.tiny-player .track-item .add {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: #AAAAAA;
+  line-height: 30px;
+  height: 30px;
+  margin: 0px 5px 0px 0px;
+  cursor: pointer;
+  display: none;
+}
+.tiny-player .track-item:hover .add {
+  display: block;
+  color: #333333;
+}
+.tiny-player .track-item .user {
+  color: #AAAAAA;
+}
+.tiny-player .track-item .title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 1.1em;
+}
+.tiny-player .track-item .artwork {
+  float: left;
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  background-image: url(images/albumart.png);
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22src%2Fless%2Ftinyplayer.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAAA%3BEACI%2CYAAA%3BEACA%2CeAAA%3BEACA%2CWAAA%3BEACA%2CSAAA%3BEACA%2CmBAAA%3BEACA%2CiBAAA%3BEACA%2CeAAA%3BEACA%2CcAAA%3B%3BAARJ%2CYAUI%3BEACI%2CYAAA%3BEACA%2CWAAA%3BEACA%2CYAAA%3BEACA%2CeAAA%3BEACA%2C6BAAA%3BEACA%2CsBAAA%3BEACA%2CcAAA%3B%3BAAEA%2CYATJ%2CcASK%3BEACG%2CcAAA%3B%3BAApBZ%2CYAwBI%3BEACI%2CyBAAA%3BEACA%2CgCAAA%3BEACA%2CiBAAA%3BEACA%2CYAAA%3BEACA%2CkBAAA%3B%3BAA7BR%2CYAwBI%2CQAOI%3BEACI%2CWAAA%3B%3BAAhCZ%2CYAwBI%2CQAWI%3BEACI%2CiBAAA%3BEACA%2CiBAAA%3BEACA%2CcAAA%3BEACA%2CWAAA%3BEACA%2CYAAA%3BEACA%2CYAAA%3BEACA%2CmBAAA%3BEACA%2CuBAAA%3BEACA%2CgBAAA%3BEACA%2CiBAAA%3BEACA%2C4BAAA%3BEACA%2CiBAAA%3BEACA%2CmBAAA%3BEACA%2CYAAY%2CmHAAZ%3B%3BAAjDZ%2CYAwBI%2CQA4BI%3BEACI%2CWAAA%3BEACA%2CiBAAA%3B%3BAAtDZ%2CYAwBI%2CQA4BI%2CQAII%3BEACI%2CWAAA%3B%3BAAzDhB%2CYAwBI%2CQA4BI%2CQAQI%3BEACI%2CyBAAA%3BEACA%2CWAAA%3BEACA%2CWAAA%3BEACA%2CYAAA%3BEACA%2CsBAAA%3BEACA%2CyBAAA%3BEACA%2CeAAA%3B%3BAAnEhB%2CYAwBI%2CQA4BI%2CQAQI%2CMASI%3BEACI%2CyBAAA%3BEACA%2CsBAAA%3B%3BAAvEpB%2CYAwBI%2CQA4BI%2CQAQI%2CMAcI%3BEACI%2CWAAA%3BEACA%2CYAAA%3BEACA%2CsBAAA%3BEACA%2CyBAAA%3BEACA%2CeAAA%3BEACA%2CSAAA%3BEACA%2CUAAA%3B%3BAAjFpB%2CYAwBI%2CQA8DI%3BEACI%2CkBAAA%3BEACA%2CSAAA%3BEACA%2CWAAA%3BEACA%2CWAAA%3B%3BAA1FZ%2CYAwBI%2CQA8DI%2CUAMI%3BEACI%2CWAAA%3BEACA%2CWAAA%3BEACA%2CYAAA%3BEACA%2CsBAAA%3BEACA%2CyBAAA%3BEACA%2CgBAAA%3BEACA%2CeAAA%3B%3BAAnGhB%2CYAwBI%2CQA8DI%2CUAMI%2CMASI%3BEACI%2CyBAAA%3BEACA%2CsBAAA%3B%3BAAvGpB%2CYAwBI%2CQA8DI%2CUAMI%2CMAcI%3BEACI%2CWAAA%3BEACA%2CYAAA%3BEACA%2CYAAY%2CmDAAZ%3BEACA%2CeAAA%3BEACA%2CQAAA%3BEACA%2CUAAA%3B%3BAAhHpB%2CYAwBI%2CQA6FI%3BEACI%2CYAAA%3BEACA%2CkBAAA%3B%3BAAvHZ%2CYAwBI%2CQA6FI%2CSAII%2COAAM%3BEACF%2CcAAA%3B%3BAA1HhB%2CYA%2BHI%3BEACI%2CyBAAA%3BEACA%2CyBAAA%3B%3BAAjIR%2CYAoII%3BEACI%2CYAAA%3BEACA%2CYAAA%3BEACA%2C8BAAA%3B%3BAAvIR%2CYAoII%2CYAKI%3BEACI%2CYAAA%3BEACA%2CiBAAA%3BEACA%2CkBAAA%3BEACA%2CcAAA%3BEACA%2CeAAA%3B%3BAA9IZ%2CYAoII%2CYAaI%3BEACI%2CYAAA%3BEACA%2CyBAAA%3BEACA%2CmBAAA%3BEACA%2CYAAA%3BEACA%2CYAAA%3B%3BAAEA%2CYApBR%2CYAaI%2CYAOK%3BEACG%2CyBAAA%3B%3BAAGJ%2CYAxBR%2CYAaI%2CYAWK%3BEACG%2CyBAAA%3B%3BAA7JhB%2CYAoII%2CYAaI%2CYAeI%3BEACI%2CWAAA%3B%3BAAjKhB%2CYAoII%2CYAaI%2CYAmBI%3BEACI%2CcAAA%3BEACA%2CgBAAA%3BEACA%2CYAAA%3BEACA%2CYAAA%3B%3BAAxKhB%2CYA6KI%3BEACI%2CaAAA%3BEACA%2CkBAAA%3BEACA%2C6BAAA%3B%3BAAhLR%2CYA6KI%2CeAII%3BEACI%2CWAAA%3BEACA%2CYAAA%3B%3BAAnLZ%2CYAuLI%3BEACI%2CaAAA%3BEACA%2CWAAA%3BEACA%2CaAAA%3BEACA%2CgBAAA%3B%3BAA3LR%2CYA8LI%3BEACI%2CWAAA%3BEACA%2CYAAA%3BEACA%2CyBAAA%3BEACA%2CkBAAA%3BEACA%2CWAAA%3BEACA%2CyBAAA%3BEACA%2CkBAAA%3BEACA%2CeAAA%3B%3BAAEA%2CYAVJ%2CYAUK%3BEACG%2CyBAAA%3B%3BAAzMZ%2CYA8LI%2CYAcI%3BEACI%2CkBAAA%3BEACA%2CSAAA%3BEACA%2CWAAA%3BEACA%2CeAAA%3BEACA%2CaAAA%3B%3BAAGJ%2CYAtBJ%2CYAsBK%2CMAAO%3BEACJ%2CcAAA%3B%3BAArNZ%2CYA8LI%2CYA0BI%3BEACI%2CcAAA%3BEACA%2CgBAAA%3BEACA%2CmBAAA%3BEACA%2CuBAAA%3BEACA%2CgBAAA%3B%3BAA7NZ%2CYA8LI%2CYAkCI%3BEACI%2CmBAAA%3BEACA%2CuBAAA%3BEACA%2CgBAAA%3B%3BAAnOZ%2CYA8LI%2CYAwCI%3BEACI%2CWAAA%3BEACA%2CYAAA%3BEACA%2CkBAAA%3BEACA%2CsBAAA%3BEACA%2C0CAAA%3B%3BAA3OZ%2CYA%2BOI%3BEACI%2CgBAAA%3BEACA%2CYAAA%3BEACA%2CYAAA%3BEACA%2CWAAA%3B%3BAAEA%2CYANJ%2CYAMK%3BEACG%2CyBAAA%3B%3BAAtPZ%2CYA%2BOI%2CYAUI%3BEACI%2CYAAA%3BEACA%2CeAAA%3BEACA%2CiBAAA%3BEACA%2CcAAA%3BEACA%2CiBAAA%3BEACA%2CYAAA%3BEACA%2CuBAAA%3BEACA%2CeAAA%3BEACA%2CaAAA%3B%3BAAEJ%2CYArBJ%2CYAqBK%2CMAAO%3BEACJ%2CcAAA%3BEACA%2CcAAA%3B%3BAAtQZ%2CYA%2BOI%2CYA0BI%3BEACI%2CcAAA%3B%3BAA1QZ%2CYA%2BOI%2CYA8BI%3BEACI%2CmBAAA%3BEACA%2CuBAAA%3BEACA%2CgBAAA%3BEACA%2CgBAAA%3B%3BAAjRZ%2CYA%2BOI%2CYAqCI%3BEACI%2CWAAA%3BEACA%2CkBAAA%3BEACA%2CWAAA%3BEACA%2CYAAA%3BEACA%2CsBAAA%3BEACA%2C0CAAA%22%7D */
+@font-face {
+  font-family: 'fontello';
+  src: url('font/fontello.eot?35000172');
+  src: url('font/fontello.eot?35000172#iefix') format('embedded-opentype'), url('font/fontello.woff?35000172') format('woff'), url('font/fontello.ttf?35000172') format('truetype'), url('font/fontello.svg?35000172#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?35000172#fontello') format('svg');
+  }
+}
+*/
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+.icon-play:before {
+  content: '\e800';
+}
+/* '' */
+.icon-pause:before {
+  content: '\e801';
+}
+/* '' */
+.icon-loop:before {
+  content: '\e802';
+}
+/* '' */
+.icon-list:before {
+  content: '\e803';
+}
+/* '' */
+.icon-to-start:before {
+  content: '\e804';
+}
+/* '' */
+.icon-to-end:before {
+  content: '\e805';
+}
+/* '' */
+.icon-shuffle:before {
+  content: '\e806';
+}
+/* '' */
+.icon-volume-up:before {
+  content: '\e807';
+}
+/* '' */
+.icon-volume-off:before {
+  content: '\e808';
+}
+/* '' */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22src%2Fless%2Ffontello.css%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAAA%3BEACE%2CaAAa%2CUAAb%3BEACA%2CSAAS%2C6BAAT%3BEACA%2CSAAS%2CoCAAoC%2COAAO%2C0BAC3C%2C%2BBAA%2BB%2COAAO%2CaACtC%2C8BAA8B%2COAAO%2CiBACrC%2CuCAAuC%2COAAO%2CMAHvD%3BEAIA%2CmBAAA%3BEACA%2CkBAAA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAaD%2CgBAAgB%3BAAAS%2CiBAAiB%3BEACzC%2CaAAa%2CUAAb%3BEACA%2CkBAAA%3BEACA%2CmBAAA%3BEACA%2CWAAA%3BEAEA%2CqBAAA%3BEACA%2CwBAAA%3BEACA%2CUAAA%3BEACA%2CkBAAA%3BEACA%2CkBAAA%3B%3B%3BEAIA%2CoBAAA%3BEACA%2CoBAAA%3B%3BEAGA%2CgBAAA%3B%3B%3BEAIA%2CiBAAA%3B%3B%3B%3B%3B%3BAASF%2CUAAU%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACpB%2CWAAW%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACrB%2CUAAU%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACpB%2CUAAU%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACpB%2CcAAc%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACxB%2CYAAY%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACtB%2CaAAa%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACvB%2CeAAe%3BEAAU%2CSAAS%2COAAT%3B%3B%3BAACzB%2CgBAAgB%3BEAAU%2CSAAS%2COAAT%22%7D */
