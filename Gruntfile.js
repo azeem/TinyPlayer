@@ -95,5 +95,5 @@ module.exports = function(grunt) {
     // Default task.
     grunt.registerTask('default', ['jshint', 'clean', 'concat:dev', 'less:dev', "copy"]);
     grunt.registerTask('dist', ['jshint', 'clean', 'uglify:dist', 'less:dist', "copy"]);
-    grunt.registerTask("debug", ["default", "connect", "watch"]);
+    grunt.registerTask("serve", ["default", "connect", "watch"]);
 };

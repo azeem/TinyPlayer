@@ -96,10 +96,14 @@
             this.sc = SC.initialize({
                 client_id: this.scClientId
             });
-
-            this.audio = new Audio();
-            this.audio.addEventListener("ended", _.bind(this.handlePlayEnd, this));
-            this.audio.addEventListener("timeupdate", _.bind(this.handleTimeUpdate, this));
+	    
+	    if(opts.useSoundManager) {
+		this.audio = new SMAdapter();
+	    } else {
+		this.audio = new WebAudioAdapter();
+	    }
+	    this.listenTo(this.audio, "ended", this.handlePlayEnd);
+	    this.listenTo(this.audio, "timeupdate", this.handleTimeUpdate);
 
             this.status = this.playState.STOPPED;
             this.loop = true;
@@ -120,7 +124,7 @@
 
             this.$(".volume div").slider({
                 range: "min",
-                value: this.audio.volume*100
+                value: this.audio.getVolume()*100
             });
 
             this.playPauseIcon();
@@ -128,7 +132,7 @@
 
         playTrack: function(queueItem) {
             var track = queueItem.data("tinyPlayerTrack");
-            this.audio.src = track.stream_url + "?client_id=" + this.scClientId;
+            this.audio.setUrl(track.stream_url + "?client_id=" + this.scClientId);
             this.audio.play();
             this.status = this.playState.PLAYING;
 
@@ -291,17 +295,20 @@
             if(this.status == this.playState.STOPPED) {
                 return;
             }
+	    var currentTime = this.audio.getCurrentTime();
+	    var duration = this.audio.getDuration();
+
             if(!this.isSeekSliding) {
-                var value = (this.audio.currentTime/this.audio.duration)*100;
+                var value = (currentTime/duration)*100;
                 this.$(".seek-bar > div").slider("value", value);
             }
-            var position = -(this.audio.currentTime/this.audio.duration)*70;
+            var position = -(currentTime/duration)*70;
             this.$(".track-info").css("background-position", "0px " + position + "px");
         },
 
         handleSeek: function(event, ui) {
             var value = ui.value;
-            this.audio.fastSeek((value/100) * this.audio.duration);
+            this.audio.seek((value/100) * this.audio.getDuration());
             this.isSeekSliding = false;
         },
 
@@ -341,18 +348,18 @@
 
         handleVolumeChange: function(event, ui) {
             var volume = ui.value/100;
-            this.audio.volume = volume;
+	    this.audio.setVolume(volume);
         },
 
         handleMute: function() {
-            if(this.audio.muted) {
+            if(this.audio.isMuted()) {
                 this.$(".volume button").removeClass("icon-volume-off").addClass("icon-volume-up");
                 this.$(".volume > div").slider("enable");
-                this.audio.muted = false;
+                this.audio.setMute(false);
             } else {
                 this.$(".volume button").removeClass("icon-volume-up").addClass("icon-volume-off");
                 this.$(".volume > div").slider("disable");
-                this.audio.muted = true;
+                this.audio.setMute(true);
             }
         },
 
@@ -379,7 +386,124 @@
             slider.slider('value', value);
         }
     });
-
     window.TinyPlayer = TinyPlayer;
+
+    var AudioAdapter = _.extend({}, Backbone.Events, {
+        setUrl:         function(url) {},
+        play:           function() {},
+        pause:          function() {},
+        getVolume:      function() {},
+        setVolume:      function(vol) {},
+        isMuted:        function() {},
+        setMute:        function(mute) {},
+        getCurrentTime: function() {},
+        seek:           function(time) {},
+        getDuration:    function() {},
+
+        handleEnded: function() {
+            this.trigger("ended");
+        },
+        handleTimeUpdate: function() {
+            this.trigger("timeupdate");
+        }
+    });
+    var WebAudioAdapter = function() {
+        this.audio = new Audio();
+        this.audio.addEventListener("ended", _.bind(this.handleEnded, this));
+        this.audio.addEventListener("timeupdate", _.bind(this.handleTimeUpdate, this));
+    };
+    WebAudioAdapter.prototype = _.extend({}, AudioAdapter, {
+        setUrl: function(url) {
+            this.audio.src = url;
+        },
+        play: function() {
+            this.audio.play();
+        },
+        pause: function() {
+            this.audio.pause();
+        },
+        getVolume: function() {
+            return this.audio.volume;
+        },
+        setVolume: function(volume) {
+            this.audio.volume = volume;
+        },
+        isMuted: function() {
+            return this.audio.muted;
+        },
+        setMute: function(mute) {
+            this.audio.muted = mute;
+        },
+        getCurrentTime: function() {
+            return this.audio.currentTime;
+        },
+        seek: function(time) {
+            this.audio.fastSeek(time);
+        },
+        getDuration: function() {
+            return this.audio.duration;
+        }
+    });
+
+    var SMAdapter = function() {
+        this.sound = null;
+        this.volume = 1;
+        this.muted = false;
+    };
+    SMAdapter.prototype = _.extend({}, AudioAdapter, {
+        setUrl: function(url) {
+            if(this.sound) {
+                soundManager.destroySound(this.sound);
+            }
+            this.sound = soundManager.createSound({
+                url: url,
+                volume: Math.round(this.volume * 100),
+                muted: this.muted,
+                onfinish: _.bind(this.handleEnded, this),
+                whileplaying: _.bind(this.handleTimeUpdate, this)
+            });
+            this.trigger("soundCreate", this.sound);
+        },
+        play: function() {
+            if(!this.sound) { return; }
+            this.sound.play();
+        },
+        pause: function() {
+            if(!this.sound) { return; }
+            this.sound.pause();
+        },
+        getVolume: function() {
+            return this.volume;
+        },
+        setVolume: function(volume) {
+            this.volume = volume;
+            if(!this.sound) { return; }
+            this.sound.setVolume(Math.round(volume * 100));
+        },
+        isMuted: function() {
+            return this.muted;
+        },
+        setMute: function(muted) {
+            this.muted = muted;
+            if(!this.sound) { return; }
+            if(this.muted) {
+                this.sound.mute();
+            } else {
+                this.sound.unmute();
+            }
+        },
+        getCurrentTime: function() {
+            if(!this.sound) { return; }
+            return this.sound.position/1000;
+        },
+        seek: function(time) {
+            if(!this.sound) { return; }
+            this.sound.setPosition(time*1000);
+        },
+        getDuration: function() {
+            if(!this.sound) { return; }
+            return this.sound.durationEstimate/1000;
+        }
+    });
 
 })(jQuery, _, Backbone);
