@@ -451,11 +451,17 @@
         this.muted = false;
     };
     SMAdapter.prototype = _.extend({}, AudioAdapter, {
+        createSound: function(opts) {
+            // weird work around since soundmanager sound
+            // properties cannot modified after init
+            return soundManager.createSound(opts);
+        },
+
         setUrl: function(url) {
             if(this.sound) {
                 soundManager.destroySound(this.sound);
             }
-            this.sound = soundManager.createSound({
+            this.sound = this.createSound({
                 url: url,
                 volume: Math.round(this.volume * 100),
                 muted: this.muted,
