@@ -93,9 +93,6 @@
 
         initialize: function(opts) {
             this.scClientId = opts.scClientId;
-            this.sc = SC.initialize({
-                client_id: this.scClientId
-            });
 	    
 	    if(opts.useSoundManager) {
 		this.audio = new SMAdapter();
@@ -208,6 +205,15 @@
             }
         },
 
+        scApi: function(url, params, callback) {
+            var data = _.extend({client_id: this.scClientId}, params);
+            return $.ajax("https://api.soundcloud.com" + url, {
+                data: data,
+                dataType: "json",
+                success: callback,
+            });
+        },
+
         // event handlers
         handleSearch: function() {
             var query = $.trim(this.$(".search-bar input").val());
@@ -218,7 +224,7 @@
             }
 
             this.$(".search-bar").addClass("busy");
-            this.sc.get("/tracks", {q: query}, _.bind(function(tracks) {
+            this.scApi("/tracks", {q: query}, _.bind(function(tracks) {
                 tracks = _.filter(tracks, function(track) {
                     return track.streamable;
                 });
@@ -459,7 +465,7 @@
 
         setUrl: function(url) {
             if(this.sound) {
-                soundManager.destroySound(this.sound);
+                this.sound.destruct();
             }
             this.sound = this.createSound({
                 url: url,
@@ -468,7 +474,6 @@
                 onfinish: _.bind(this.handleEnded, this),
                 whileplaying: _.bind(this.handleTimeUpdate, this)
             });
-            this.trigger("soundCreate", this.sound);
         },
         play: function() {
             if(!this.sound) { return; }
