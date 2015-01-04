@@ -88,19 +88,19 @@
 
             "click .toolbar .expand": "handleToolbarExpand",
             "click .toolbar .loop": "handleToolbarLoop",
-            "click .toolbar .shuffle": "handleToolbarShuffle",
+            "click .toolbar .shuffle": "handleToolbarShuffle"
         },
 
         initialize: function(opts) {
             this.scClientId = opts.scClientId;
 	    
-	    if(opts.useSoundManager) {
-		this.audio = new SMAdapter();
-	    } else {
-		this.audio = new WebAudioAdapter();
-	    }
-	    this.listenTo(this.audio, "ended", this.handlePlayEnd);
-	    this.listenTo(this.audio, "timeupdate", this.handleTimeUpdate);
+            if(opts.useSoundManager) {
+                this.audio = new SMAdapter(opts.audioOpts);
+            } else {
+                this.audio = new WebAudioAdapter(opts.audioOpts);
+            }
+            this.listenTo(this.audio, "ended", this.handlePlayEnd);
+            this.listenTo(this.audio, "timeupdate", this.handleTimeUpdate);
 
             this.status = this.playState.STOPPED;
             this.loop = true;
@@ -125,6 +125,11 @@
             });
 
             this.playPauseIcon();
+        },
+
+        remove: function() {
+            this.audio.destroy();
+            Backbone.View.prototype.remove.apply(this, arguments);
         },
 
         playTrack: function(queueItem) {
@@ -210,7 +215,7 @@
             return $.ajax("https://api.soundcloud.com" + url, {
                 data: data,
                 dataType: "json",
-                success: callback,
+                success: callback
             });
         },
 
@@ -448,32 +453,33 @@
         },
         getDuration: function() {
             return this.audio.duration;
+        },
+        destroy: function() {
+            this.pause();
+            this.audio = null;
         }
     });
 
-    var SMAdapter = function() {
+    var SMAdapter = function(opts) {
         this.sound = null;
         this.volume = 1;
         this.muted = false;
+        this.opts = opts || {};
     };
     SMAdapter.prototype = _.extend({}, AudioAdapter, {
-        createSound: function(opts) {
-            // weird work around since soundmanager sound
-            // properties cannot modified after init
-            return soundManager.createSound(opts);
-        },
-
         setUrl: function(url) {
             if(this.sound) {
                 this.sound.destruct();
             }
-            this.sound = this.createSound({
+            var opts = _.defaults({
                 url: url,
                 volume: Math.round(this.volume * 100),
                 muted: this.muted,
                 onfinish: _.bind(this.handleEnded, this),
                 whileplaying: _.bind(this.handleTimeUpdate, this)
-            });
+            }, this.opts.soundOpts);
+            this.sound = soundManager.createSound(opts);
+            this.trigger("soundcreate", this.sound);
         },
         play: function() {
             if(!this.sound) { return; }
@@ -514,6 +520,12 @@
         getDuration: function() {
             if(!this.sound) { return; }
             return this.sound.durationEstimate/1000;
+        },
+        destroy: function() {
+            this.pause();
+            if(this.sound) {
+                this.sound.destruct();
+            }
         }
     });
 
