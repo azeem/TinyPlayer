@@ -418,8 +418,21 @@
             this.trigger("timeupdate");
         }
     });
-    var WebAudioAdapter = function() {
+    var WebAudioAdapter = function(opts) {
         this.audio = new Audio();
+
+        if(opts.withAudioContext) {
+            if(window.webkitAudioContext) {
+                this.context = new webkitAudioContext();
+            } else if(window.AudioContext) {
+                this.context = new AudioContext();
+            } else {
+                throw new Error("Cannot create webaudio context");
+            }
+            this.source = this.context.createMediaElementSource(this.audio);
+            this.source.connect(this.context.destination);
+        }
+
         this.audio.addEventListener("ended", _.bind(this.handleEnded, this));
         this.audio.addEventListener("timeupdate", _.bind(this.handleTimeUpdate, this));
     };
